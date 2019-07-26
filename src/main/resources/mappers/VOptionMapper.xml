@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.gf.mapper.VOptionMapper">
+  <resultMap id="BaseResultMap" type="com.example.gf.pojo.VOption">
+    <constructor>
+      <idArg column="id" javaType="java.lang.Long" jdbcType="BIGINT" />
+      <arg column="optContent" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="vote" javaType="java.lang.Long" jdbcType="BIGINT" />
+      <arg column="sid" javaType="java.lang.Long" jdbcType="BIGINT" />
+      <arg column="create_date" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+      <arg column="updata_date" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, optContent, vote, sid, create_date, updata_date
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from v_options
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from v_options
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.example.gf.pojo.VOption">
+    insert into v_options (id, optContent, vote, 
+      sid, create_date, updata_date
+      )
+    values (#{id,jdbcType=BIGINT}, #{optcontent,jdbcType=INTEGER}, #{vote,jdbcType=BIGINT}, 
+      #{sid,jdbcType=BIGINT}, now(),now()
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.example.gf.pojo.VOption">
+    insert into v_options
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="optcontent != null">
+        optContent,
+      </if>
+      <if test="vote != null">
+        vote,
+      </if>
+      <if test="sid != null">
+        sid,
+      </if>
+      <if test="createDate != null">
+        create_date,
+      </if>
+      <if test="updataDate != null">
+        updata_date,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="optcontent != null">
+        #{optcontent,jdbcType=INTEGER},
+      </if>
+      <if test="vote != null">
+        #{vote,jdbcType=BIGINT},
+      </if>
+      <if test="sid != null">
+        #{sid,jdbcType=BIGINT},
+      </if>
+      <if test="createDate != null">
+        now(),
+      </if>
+      <if test="updataDate != null">
+       now(),
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.example.gf.pojo.VOption">
+    update v_options
+    <set>
+      <if test="optcontent != null">
+        optContent = #{optcontent,jdbcType=INTEGER},
+      </if>
+      <if test="vote != null">
+        vote = #{vote,jdbcType=BIGINT},
+      </if>
+      <if test="sid != null">
+        sid = #{sid,jdbcType=BIGINT},
+      </if>
+      <if test="createDate != null">
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updataDate != null">
+        updata_date =now(),
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.example.gf.pojo.VOption">
+    update v_options
+    set optContent = #{optcontent,jdbcType=INTEGER},
+      vote = #{vote,jdbcType=BIGINT},
+      sid = #{sid,jdbcType=BIGINT},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      updata_date =now()
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

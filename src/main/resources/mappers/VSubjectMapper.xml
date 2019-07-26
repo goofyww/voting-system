@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.gf.mapper.VSubjectMapper">
+  <resultMap id="BaseResultMap" type="com.example.gf.pojo.VSubject">
+    <constructor>
+      <idArg column="id" javaType="java.lang.Long" jdbcType="BIGINT" />
+      <arg column="title" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="total_votes" javaType="java.lang.Long" jdbcType="BIGINT" />
+      <arg column="view_times" javaType="java.lang.Long" jdbcType="BIGINT" />
+      <arg column="create_date" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+      <arg column="updata_date" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, title, total_votes, view_times, create_date, updata_date
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from v_subjects
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from v_subjects
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.example.gf.pojo.VSubject">
+    insert into v_subjects (id, title, total_votes, 
+      view_times, create_date, updata_date
+      )
+    values (#{id,jdbcType=BIGINT}, #{title,jdbcType=VARCHAR}, #{totalVotes,jdbcType=BIGINT}, 
+      #{viewTimes,jdbcType=BIGINT}, now(),now()
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.example.gf.pojo.VSubject">
+    insert into v_subjects
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="title != null">
+        title,
+      </if>
+      <if test="totalVotes != null">
+        total_votes,
+      </if>
+      <if test="viewTimes != null">
+        view_times,
+      </if>
+      <if test="createDate != null">
+        create_date,
+      </if>
+      <if test="updataDate != null">
+        updata_date,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="title != null">
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="totalVotes != null">
+        #{totalVotes,jdbcType=BIGINT},
+      </if>
+      <if test="viewTimes != null">
+        #{viewTimes,jdbcType=BIGINT},
+      </if>
+      <if test="createDate != null">
+        now(),
+      </if>
+      <if test="updataDate != null">
+       now(),
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.example.gf.pojo.VSubject">
+    update v_subjects
+    <set>
+      <if test="title != null">
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="totalVotes != null">
+        total_votes = #{totalVotes,jdbcType=BIGINT},
+      </if>
+      <if test="viewTimes != null">
+        view_times = #{viewTimes,jdbcType=BIGINT},
+      </if>
+      <if test="createDate != null">
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updataDate != null">
+        updata_date =now(),
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.example.gf.pojo.VSubject">
+    update v_subjects
+    set title = #{title,jdbcType=VARCHAR},
+      total_votes = #{totalVotes,jdbcType=BIGINT},
+      view_times = #{viewTimes,jdbcType=BIGINT},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      updata_date =now()
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="selectAll" resultMap="BaseResultMap">
+    SELECT
+    <include refid="Base_Column_List" />
+    FROM v_subjects
+  </select>
+</mapper>
